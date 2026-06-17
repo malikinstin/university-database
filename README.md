@@ -53,6 +53,19 @@ Concepts Demonstrated
 - Query Optimization Basics
 - Database Administration Operations
 
+## Sample Queries
+
+### Find all full professors
+sql
+SELECT * FROM INSTRUCTOR
+WHERE InstRank = 'Full';
+
+
+### Find students enrolled after 1998
+sql
+SELECT FirstName, LastName, City
+FROM STUDENT
+WHERE EnrollDate > '1998-01-01';
 
 ## Database Schema
 
