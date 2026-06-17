@@ -53,6 +53,11 @@ Concepts Demonstrated
 - Query Optimization Basics
 - Database Administration Operations
 
+
+## Database Schema
+
+![Database Schema](schema.png)
+
 Author
 
 Frederick Sika
