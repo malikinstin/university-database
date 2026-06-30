@@ -1,5 +1,6 @@
 USE UNIVERSITY_DB;
 
+-- Creates the instructor table
 DROP TABLE IF EXISTS INSTRUCTOR;
 CREATE TABLE INSTRUCTOR(
 InstName VARCHAR(30) NOT NULL PRIMARY KEY,
@@ -7,6 +8,7 @@ InstOffice VARCHAR(30),
 InstRank VARCHAR(20)
 );
 
+--Creates the course table
 DROP TABLE IF EXISTS COURSE;
 CREATE TABLE COURSE(
 CourseNo VARCHAR(10) NOT NULL PRIMARY KEY,
@@ -16,6 +18,8 @@ InstName VARCHAR(30) NOT NULL,
 FOREIGN KEY (InstName) REFERENCES INSTRUCTOR(InstName)
 );
 
+
+--Creates student table
 DROP TABLE IF EXISTS STUDENT;
 CREATE TABLE STUDENT(
 StudentNo VARCHAR(10) NOT NULL PRIMARY KEY,
@@ -29,6 +33,7 @@ EnrollDate DATE,
 Undergrad VARCHAR(5)
 );
 
+DROP TABLE IF EXISTS GRADE;
 CREATE TABLE GRADE(
 InstName VARCHAR(30) NOT NULL,
 StudentNo VARCHAR(10) NOT NULL,
@@ -40,6 +45,7 @@ FOREIGN KEY (StudentNo) REFERENCES STUDENT(StudentNo),
 FOREIGN KEY (CourseNo) REFERENCES COURSE(CourseNo)
 );
 
+DROP TABLE IF EXISTS TAKES;
 CREATE TABLE TAKES(
 StudentNo VARCHAR(10) NOT NULL,
 CourseNo VARCHAR(10),
@@ -182,5 +188,57 @@ SELECT FirstName, LastName, EnrollDate
 FROM STUDENT
 ORDER BY EnrollDate DESC;
 
+SELECT InstName as NameOfLecturer,
+InstOffice OfficeLocation,
+instrank as Designation
+from INSTRUCTOR
+where InstName= 'Lujan'
 
 
+SELECT * FROM STUDENT
+WHERE Undergrad IS NOT NULL;
+
+
+SELECT DISTINCT StateCity FROM STUDENT;
+
+SELECT FirstName, LastName, StateCity
+FROM STUDENT
+WHERE StateCity = 'KY' OR StateCity = 'CA'
+ORDER BY LastName ASC;
+
+SELECT * FROM STUDENT;
+SELECT * FROM GRADE;
+
+
+SELECT FirstName, LastName, CourseNo, StudentGrade
+FROM STUDENT
+INNER JOIN GRADE ON STUDENT.StudentNo = GRADE.StudentNo;
+
+SELECT STUDENT.StudentNo, FirstName, LastName, COURSE.CourseNo, Title, StudentGrade
+FROM STUDENT
+INNER JOIN GRADE ON STUDENT.StudentNo = GRADE.StudentNo
+INNER JOIN COURSE ON GRADE.CourseNo = COURSE.CourseNo;
+
+SELECT STUDENT.StudentNo, FirstName, LastName, GRADE.CourseNo, StudentGrade
+FROM STUDENT
+LEFT JOIN GRADE ON STUDENT.StudentNo =GRADE.StudentNo;
+
+SELECT STUDENT.StudentNo, FirstName, LastName, GRADE.CourseNo, StudentGrade
+FROM STUDENT
+LEFT JOIN GRADE ON STUDENT.StudentNo =GRADE.StudentNo
+WHERE StudentGrade IS NULL;
+
+SELECT STUDENT.StudentNo, FirstName, LastName, GRADE.CourseNo, StudentGrade
+FROM STUDENT
+RIGHT JOIN GRADE ON STUDENT.StudentNo = GRADE.StudentNo;
+
+SELECT STUDENT.StudentNo, FirstName, LastName, GRADE.CourseNo, StudentGrade
+FROM GRADE
+LEFT JOIN STUDENT ON GRADE.StudentNo = STUDENT.StudentNo;
+
+SELECT COURSE.CourseNO,StudentNo,Title
+FROM COURSE
+LEFT JOIN TAKES ON COURSE.CourseNo = TAKES.CourseNo;
+
+
+SELECT * FROM TAKES;
